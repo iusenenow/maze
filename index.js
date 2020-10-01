@@ -106,14 +106,6 @@ const stepThroughCell = (row, column) => {
 
 stepThroughCell(startRow, startColumn)
 
-console.log(grid)
-
-
-
-
-
-
-
 
 
 // Before:
