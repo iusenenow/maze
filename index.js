@@ -1,4 +1,4 @@
-const { Engine, Render, Runner, World, Bodies } = Matter
+const { Engine, Render, Runner, World, Bodies, Body } = Matter
 
 const cells = 10
 const width = 600
@@ -7,12 +7,13 @@ const height = 600
 const unitLength = width / cells
 
 const engine = Engine.create()
+engine.world.gravity.y = 0
 const { world } = engine
 const render = Render.create({
   element: document.body,
   engine: engine,
   options: {
-    wireframes: true,
+    wireframes: false,
     width,
     height
   }
@@ -150,7 +151,23 @@ const goal = Bodies.rectangle(
 
 World.add(world, goal)
 
+// Ball
 
+const ball = Bodies.circle(
+  unitLength / 2,
+  unitLength / 2,
+  unitLength / 4
+)
+
+World.add(world, ball)
+
+document.addEventListener('keydown', e => {
+  const { x, y } = ball.velocity
+  if (e.key === 'w') Body.setVelocity(ball, { x, y: y - 5 })
+  if (e.key === 'd') Body.setVelocity(ball, { x: x + 5, y })
+  if (e.key === 's') Body.setVelocity(ball, { x, y: y + 5 })
+  if (e.key === 'a') Body.setVelocity(ball, { x: x - 5, y })
+})
 
 // Before:
 // const { Engine, Render, Runner, World, Bodies, MouseConstraint, Mouse } = Matter
